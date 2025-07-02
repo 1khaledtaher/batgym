@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BATGYM - تطبيق اللياقة البدنية</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bat-dark">
+  <div id="main-content-wrapper">
+    <header class="main-header">
+      <div class="logo">
+        <span class="logo-text">BATGYM</span>
+      </div>
+    </header>
+    <main class="main-content">
+      <section class="hero-card" style="justify-content:center;align-items:center;text-align:center;min-height:120px;">
+        <h1 style="margin-bottom:0;">ازيك يا بطل! 👋</h1>
+      </section>
+
+      <!-- قسم السوشيال -->
+      <section class="hero-card" style="margin-top:18px;align-items:stretch;">
+        <h2 style="color:#D4AF37;margin-bottom:10px;text-align:center;">
+          أبطال <span style="color:#F4D03F;">BATGYM</span>
+        </h2>
+        <div id="posts-auth-message" style="display:none;text-align:center;margin-bottom:16px;">
+          <p style="color:#D4AF37;font-size:1.08rem;margin-bottom:12px;">سجل دخول عشان تدخل مجتمع BATGYM وتشارك تطوراتك مع الناس وتشوف تطوراتهم</p>
+          <button id="main-login-btn" class="main-btn" style="min-width:200px;">تسجيل الدخول</button>
+        </div>
+        <div id="post-thought-bar-wrapper">
+          <div class="post-thought-bar" id="open-post-modal">
+            <img src="https://ui-avatars.com/api/?name=بطل&background=1F2128&color=D4AF37&rounded=true&size=48" class="profile-avatar" alt="بروفايل">
+            <div class="thought-input-mock">بم تفكر يا بطل؟</div>
+          </div>
+        </div>
+        <div id="main-post-modal" class="main-post-modal" style="display:none;">
+          <div class="main-post-modal-content" style="padding:0;max-width:420px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px 10px;border-bottom:1.5px solid #1F2128;">
+              <button id="close-main-post-modal" class="close-modal-btn" title="إغلاق" style="font-size:1.5rem;color:#D4AF37;background:none;border:none;">&times;</button>
+              <span style="font-size:1.13rem;font-weight:bold;color:#D4AF37;">إنشاء منشور</span>
+              <button type="submit" form="main-post-form" class="main-btn" style="font-weight:bold;padding:4px 18px;border-radius:8px;font-size:1.05rem;">نشر</button>
+            </div>
+            <form id="main-post-form" style="display:flex;flex-direction:column;gap:10px;align-items:stretch;position:relative;padding:18px 18px 10px 18px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <img id="main-post-modal-avatar" src="https://www.gravatar.com/avatar/?d=mp&s=80" style="width:38px;height:38px;border-radius:50%;object-fit:cover;">
+                <span id="main-post-modal-name" style="color:#D4AF37;font-weight:bold;font-size:1.08rem;">اسم المستخدم</span>
+              </div>
+              <textarea id="main-post-input" rows="4" placeholder="بم تفكر يا بطل؟" style="resize:none;font-family:Cairo,Tahoma,Arial,sans-serif;background:#1F2128;color:#A9A9A9;border-radius:10px;border:1.5px solid rgba(212, 175, 55, 0.2);padding:12px 10px;font-size:1.13rem;margin-bottom:4px;"></textarea>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <button type="button" id="main-post-image-btn" class="image-upload-btn" title="ارفع صورة" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#1F2128;border:none;border-radius:4px;cursor:pointer;box-shadow:none;transition:background 0.2s;">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="#D4AF37"/><path d="M11 6v10M6 11h10" stroke="#121212" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+                <div id="main-post-image-preview" style="display:none;"></div>
+              </div>
+              <input type="file" id="main-post-image" accept="image/*" style="display:none;">
+            </form>
+          </div>
+        </div>
+        <div id="main-posts-feed" style="margin-top:18px;"></div>
+      </section>
+    </main>
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-btn active">
+        <i data-feather="home" class="icon"></i>
+        <span class="nav-label">الرئيسية</span>
+      </a>
+      <a href="exercises.html" class="nav-btn">
+        <i data-feather="activity" class="icon"></i>
+        <span class="nav-label">تمارين</span>
+      </a>
+      <a href="meals.html" class="nav-btn">
+        <i data-feather="coffee" class="icon"></i>
+        <span class="nav-label">وجبات</span>
+      </a>
+      <a href="calories.html" class="nav-btn">
+        <i data-feather="bar-chart-2" class="icon"></i>
+        <span class="nav-label">سعرات</span>
+      </a>
+      <a href="weight.html" class="nav-btn">
+        <i data-feather="trending-up" class="icon"></i>
+        <span class="nav-label">وزن</span>
+      </a>
+      <a href="account.html" class="nav-btn">
+        <i data-feather="user" class="icon"></i>
+        <span class="nav-label" id="nav-profile-name">حسابي</span>
+      </a>
+    </nav>
+  </div>
+  <!-- نافذة تسجيل الدخول بالإيميل -->
+  <div id="email-login-modal" class="main-post-modal" style="display:none;">
+    <div class="main-post-modal-content">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:10px;direction:rtl;">
+        <h2 style="color:#D4AF37;margin:0;font-size:1.25rem;text-align:right;flex:1;">تسجيل الدخول</h2>
+        <button id="close-email-login-modal" class="close-modal-btn" title="إغلاق" style="align-self:flex-start;margin-top:-6px;">&times;</button>
+      </div>
+      <form id="email-login-form" style="display:flex;flex-direction:column;gap:10px;align-items:stretch;">
+        <input type="email" id="login-email" placeholder="بريدك الإلكتروني" required>
+        <input type="password" id="login-password" placeholder="كلمة السر" required>
+        <button type="submit" class="main-btn">دخول</button>
+      </form>
+      <div style="display:flex;justify-content:center;align-items:center;height:90px;width:100%;">
+        <button id="google-login-btn" class="main-btn google-circle-btn" title="تسجيل الدخول بواسطة Google">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width:32px;height:32px;">
+        </button>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+        <span style="color:#D4AF37;">ليس لديك حساب؟ </span>
+        <a href="#" id="open-register-link" style="color:#F4D03F;text-decoration:underline;cursor:pointer;">أنشئ حسابك الآن!</a>
+      </div>
+      <div id="email-login-error" style="color:#e53935;margin-top:8px;font-size:0.98rem;"></div>
+    </div>
+  </div>
+  <!-- نافذة إنشاء حساب جديد -->
+  <div id="register-modal" class="main-post-modal" style="display:none;">
+    <div class="main-post-modal-content">
+      <button id="close-register-modal" class="close-modal-btn" title="إغلاق">&times;</button>
+      <h2 style="color:#D4AF37;margin-bottom:10px;">إنشاء حساب جديد</h2>
+      <form id="register-form" style="display:flex;flex-direction:column;gap:10px;align-items:stretch;">
+        <input type="text" id="register-name" placeholder="اسمك" required>
+        <input type="email" id="register-email" placeholder="الإيميل" required>
+        <input type="password" id="register-password" placeholder="كلمة السر" required>
+        <input type="password" id="register-password2" placeholder="تأكيد كلمة السر" required>
+        <button type="submit" class="main-btn">إنشاء الحساب</button>
+      </form>
+      <div id="register-error" style="color:#e53935;margin-top:8px;font-size:0.98rem;"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // تفعيل Feather Icons
+    feather.replace();
+  </script>
+</body>
+</html> 

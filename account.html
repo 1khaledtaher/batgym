@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حسابي - BATGYM</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bat-dark">
+  <header class="main-header">
+    <div class="logo">
+      <span class="logo-text">BATGYM</span>
+    </div>
+  </header>
+  <div id="main-content-wrapper">
+    <main class="main-content">
+      <section class="hero-card" style="align-items:center;">
+        <img id="profile-avatar" src="https://ui-avatars.com/api/?name=بطل&background=1F2128&color=D4AF37&rounded=true&size=80" class="profile-avatar" style="width:80px;height:80px;margin-bottom:10px;">
+        <h2 id="profile-name" style="margin-bottom:6px;">بطل BATGYM</h2>
+        <div id="account-stats" style="color:rgba(212, 175, 55, 0.6);font-size:1.05rem;margin-bottom:10px;"></div>
+        <button id="logout-btn" class="logout-btn" style="margin-top:10px;display:none;">تسجيل الخروج</button>
+      </section>
+      <section class="hero-card" style="align-items:stretch;">
+        <h2 style="color:#D4AF37;margin-bottom:10px;">بوستاتك</h2>
+        <div id="account-posts-feed"></div>
+      </section>
+    </main>
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-btn">
+        <i data-feather="home" class="icon"></i>
+        <span class="nav-label">الرئيسية</span>
+      </a>
+      <a href="exercises.html" class="nav-btn">
+        <i data-feather="activity" class="icon"></i>
+        <span class="nav-label">تمارين</span>
+      </a>
+      <a href="meals.html" class="nav-btn">
+        <i data-feather="coffee" class="icon"></i>
+        <span class="nav-label">وجبات</span>
+      </a>
+      <a href="calories.html" class="nav-btn">
+        <i data-feather="bar-chart-2" class="icon"></i>
+        <span class="nav-label">سعرات</span>
+      </a>
+      <a href="weight.html" class="nav-btn">
+        <i data-feather="trending-up" class="icon"></i>
+        <span class="nav-label">وزن</span>
+      </a>
+      <a href="account.html" class="nav-btn active">
+        <i data-feather="user" class="icon"></i>
+        <span class="nav-label">حسابي</span>
+      </a>
+    </nav>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // تفعيل Feather Icons
+    feather.replace();
+  </script>
+</body>
+</html> 

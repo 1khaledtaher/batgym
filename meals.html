@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دليل الوجبات - BATGYM</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bat-dark">
+  <header class="main-header">
+    <div class="logo">
+      <span class="logo-text">BATGYM</span>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="hero-card">
+      <h1>دليل الوجبات</h1>
+      <p>معلومات شاملة عن السعرات الحرارية والقيم الغذائية</p>
+    </div>
+
+    <div class="feature-card">
+      <input type="text" id="meals-search" placeholder="ابحث عن وجبة..." class="meals-search">
+      <table id="meals-table">
+        <thead>
+          <tr>
+            <th>الوجبة</th>
+            <th>السعرات</th>
+            <th>البروتين</th>
+            <th>الكربوهيدرات</th>
+            <th>الدهون</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- سيتم تحميل البيانات هنا -->
+        </tbody>
+      </table>
+      <button id="show-more-meals" class="main-btn">عرض المزيد</button>
+    </div>
+  </main>
+
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-btn">
+      <i data-feather="home" class="icon"></i>
+      <span class="nav-label">الرئيسية</span>
+    </a>
+    <a href="exercises.html" class="nav-btn">
+      <i data-feather="activity" class="icon"></i>
+      <span class="nav-label">تمارين</span>
+    </a>
+    <a href="meals.html" class="nav-btn active">
+      <i data-feather="coffee" class="icon"></i>
+      <span class="nav-label">وجبات</span>
+    </a>
+    <a href="calories.html" class="nav-btn">
+      <i data-feather="bar-chart-2" class="icon"></i>
+      <span class="nav-label">سعرات</span>
+    </a>
+    <a href="weight.html" class="nav-btn">
+      <i data-feather="trending-up" class="icon"></i>
+      <span class="nav-label">وزن</span>
+    </a>
+    <a href="account.html" class="nav-btn">
+      <i data-feather="user" class="icon"></i>
+      <span class="nav-label">حسابي</span>
+    </a>
+  </nav>
+
+  <script src="script.js"></script>
+  <script>
+    // تفعيل Feather Icons
+    feather.replace();
+  </script>
+</body>
+</html> 
