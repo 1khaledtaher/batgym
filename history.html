@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hevy - السجل</title>
+  <link rel="stylesheet" href="mobile-style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .filter-buttons { display: flex; gap: 10px; margin-bottom: 18px; justify-content: center; }
+    .filter-btn { background: #23235a; border: 1px solid #6366f1; color: #ffd700; padding: 8px 18px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.3s; font-weight: 600; }
+    .filter-btn.active, .filter-btn:hover { background: #6366f1; color: #fff; border-color: #6366f1; }
+    .history-card-modern { background: linear-gradient(135deg, #23235a 80%, #1a1a1a 100%); border-radius: 18px; box-shadow: 0 4px 24px rgba(99,102,241,0.13); padding: 18px 16px 14px 16px; margin-bottom: 22px; display: flex; align-items: center; gap: 18px; border: 1.5px solid #29297a; transition: box-shadow 0.2s, transform 0.2s; }
+    .history-card-modern:hover { box-shadow: 0 8px 32px rgba(99,102,241,0.18); transform: translateY(-2px) scale(1.01); }
+    .history-icon-modern { width: 44px; height: 44px; background: #6366f1; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; box-shadow: 0 2px 8px rgba(99,102,241,0.10); }
+    .history-info-modern { flex: 1; }
+    .history-info-modern h4 { font-size: 16px; font-weight: 700; color: #ffd700; margin-bottom: 6px; }
+    .history-info-modern p { font-size: 13px; color: #bbb; margin-bottom: 2px; }
+    .history-score-modern { font-size: 18px; color: #fff; font-weight: 700; background: #29297a; border-radius: 10px; padding: 6px 14px; }
+    @media (max-width: 400px) { .history-card-modern { padding: 10px 6px 10px 6px; gap: 10px; } .history-icon-modern { width: 32px; height: 32px; font-size: 13px; } }
+    .more-bottom-sheet {
+      position: fixed;
+      left: 0; right: 0; bottom: -100%;
+      background: #23235a;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -4px 24px rgba(99,102,241,0.18);
+      z-index: 201;
+      transition: bottom 0.3s;
+      padding: 18px 16px 24px 16px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .more-bottom-sheet.active { bottom: 0; }
+    .more-overlay { display: none; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(30,32,60,0.45); z-index: 200; }
+    .more-overlay.active { display: block; }
+    .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .sheet-header span { color: #ffd700; font-size: 17px; font-weight: 700; }
+    .close-sheet { background: none; border: none; color: #ffd700; font-size: 22px; cursor: pointer; }
+    .sheet-actions { display: flex; flex-direction: column; gap: 16px; }
+    .sheet-action { display: flex; align-items: center; gap: 10px; background: #1a1a1a; color: #fff; border-radius: 10px; padding: 12px 16px; font-size: 16px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+    .sheet-action i { color: #6366f1; font-size: 18px; }
+    .sheet-action:hover { background: #29297a; }
+    .more-btn { background: none; border: none; cursor: pointer; }
+    @media (max-width: 400px) { .more-bottom-sheet { max-width: 100vw; } }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-left">
+          <button class="icon-btn" id="sidebar-btn" style="margin-left:8px;"><i class="fas fa-bars"></i></button>
+          <h1>سجل التمارين</h1>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn" id="showMoreNav">
+            <i class="fas fa-ellipsis-h"></i>
+          </button>
+          <button class="icon-btn" id="settings-btn">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="page-header">
+      <h2>سجل التمارين</h2>
+    </div>
+    <div class="filter-buttons">
+      <button class="filter-btn active">الكل</button>
+      <button class="filter-btn">هذا الأسبوع</button>
+      <button class="filter-btn">هذا الشهر</button>
+    </div>
+    <div class="history-container" id="workout-history">
+      <!-- سيتم ملؤها بواسطة السكريبت -->
+    </div>
+    <div class="more-overlay" id="moreOverlay"></div>
+    <div class="more-bottom-sheet" id="moreBottomSheet">
+      <div class="sheet-header">
+        <span>المزيد من الأقسام</span>
+        <button class="close-sheet" id="closeMoreNav"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="sheet-actions">
+        <a href="challenges.html" class="sheet-action"><i class="fas fa-bolt"></i> التحديات</a>
+        <a href="achievements.html" class="sheet-action"><i class="fas fa-medal"></i> الإنجازات</a>
+        <a href="stats.html" class="sheet-action"><i class="fas fa-chart-line"></i> الإحصائيات</a>
+        <a href="settings.html" class="sheet-action"><i class="fas fa-cog"></i> الإعدادات</a>
+        <a href="coaches.html" class="sheet-action"><i class="fas fa-chalkboard-teacher"></i> المدربون</a>
+        <a href="exercises.html" class="sheet-action"><i class="fas fa-database"></i> مكتبة التمارين</a>
+      </div>
+    </div>
+    <!-- Sidebar Overlay -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-profile">
+          <img src="https://randomuser.me/api/portraits/men/1.jpg" class="sidebar-avatar" alt="User">
+          <div class="sidebar-username">أحمد الجيمر</div>
+        </div>
+        <button class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></button>
+      </div>
+      <ul class="sidebar-list">
+        <li><a href="home.html" class="sidebar-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="workouts.html" class="sidebar-link"><i class="fas fa-dumbbell"></i> التمارين</a></li>
+        <li><a href="profile.html" class="sidebar-link"><i class="fas fa-user"></i> الملف الشخصي</a></li>
+        <li><a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
+        <li><a href="achievements.html" class="sidebar-link"><i class="fas fa-trophy"></i> الإنجازات</a></li>
+        <li><a href="challenges.html" class="sidebar-link"><i class="fas fa-bolt"></i> التحديات</a></li>
+        <li><a href="coaches.html" class="sidebar-link"><i class="fas fa-user-friends"></i> المدربين</a></li>
+        <li><a href="exercises.html" class="sidebar-link"><i class="fas fa-running"></i> التمارين الفرعية</a></li>
+        <li><a href="history.html" class="sidebar-link active"><i class="fas fa-history"></i> السجل</a></li>
+        <li><a href="stats.html" class="sidebar-link"><i class="fas fa-chart-bar"></i> الإحصائيات</a></li>
+      </ul>
+    </div>
+  </div>
+  <script src="mobile-script.js"></script>
+</body>
+</html> 
