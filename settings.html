@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hevy - الإعدادات</title>
+  <title>الإعدادات</title>
   <link rel="stylesheet" href="mobile-style.css">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -54,42 +54,13 @@
     <header class="app-header">
       <div class="header-content">
         <div class="header-left">
-          <button class="icon-btn" id="sidebar-btn" style="margin-left:8px;"><i class="fas fa-bars"></i></button>
-          <h1>الإعدادات</h1>
+          <button class="icon-btn" id="sidebar-btn"><i class="fas fa-bars"></i></button>
         </div>
-        <div class="header-right">
-          <button class="icon-btn" id="showMoreNav">
-            <i class="fas fa-ellipsis-h"></i>
-          </button>
-          <button class="icon-btn" id="settings-btn">
-            <i class="fas fa-cog"></i>
-          </button>
-        </div>
+        <div class="app-header-title">الإعدادات</div>
+        <div class="header-right"></div>
       </div>
     </header>
-    <div class="page-header">
-      <h2>الإعدادات</h2>
-    </div>
-    <div class="settings-list">
-      <div class="settings-card">
-        <span class="settings-label">الوضع الليلي</span>
-        <label class="settings-switch">
-          <input type="checkbox" id="darkModeToggle">
-          <span class="settings-slider"></span>
-        </label>
-      </div>
-      <div class="settings-card">
-        <span class="settings-label">اللغة</span>
-        <select class="lang-select" id="langSelect">
-          <option value="ar">العربية</option>
-          <option value="en">English</option>
-        </select>
-      </div>
-      <div class="settings-card">
-        <span class="settings-label">تفعيل التذكير الذكي</span>
-        <button class="reminder-btn" id="reminderBtn">تفعيل</button>
-      </div>
-    </div>
+    <div style="padding: 48px 16px; text-align: center; color: #aaa; font-size: 20px;">هذه الصفحة قيد التطوير</div>
     <div class="more-overlay" id="moreOverlay"></div>
     <div class="more-bottom-sheet" id="moreBottomSheet">
       <div class="sheet-header">
@@ -117,16 +88,11 @@
         <button class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></button>
       </div>
       <ul class="sidebar-list">
-        <li><a href="home.html" class="sidebar-link"><i class="fas fa-home"></i> الرئيسية</a></li>
-        <li><a href="workouts.html" class="sidebar-link"><i class="fas fa-dumbbell"></i> التمارين</a></li>
+        <li><a href="index.html" class="sidebar-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="calories.html" class="sidebar-link"><i class="fas fa-apple-alt"></i> سعراتك</a></li>
         <li><a href="profile.html" class="sidebar-link"><i class="fas fa-user"></i> الملف الشخصي</a></li>
-        <li><a href="settings.html" class="sidebar-link active"><i class="fas fa-cog"></i> الإعدادات</a></li>
-        <li><a href="achievements.html" class="sidebar-link"><i class="fas fa-trophy"></i> الإنجازات</a></li>
         <li><a href="challenges.html" class="sidebar-link"><i class="fas fa-bolt"></i> التحديات</a></li>
-        <li><a href="coaches.html" class="sidebar-link"><i class="fas fa-user-friends"></i> المدربين</a></li>
-        <li><a href="exercises.html" class="sidebar-link"><i class="fas fa-running"></i> التمارين الفرعية</a></li>
-        <li><a href="history.html" class="sidebar-link"><i class="fas fa-history"></i> السجل</a></li>
-        <li><a href="stats.html" class="sidebar-link"><i class="fas fa-chart-bar"></i> الإحصائيات</a></li>
+        <li><a href="settings.html" class="sidebar-link"><i class="fas fa-cog"></i> الإعدادات</a></li>
       </ul>
     </div>
   </div>
