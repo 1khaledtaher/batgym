@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار نافذة التفاصيل</title>
+  <link rel="stylesheet" href="mobile-style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-left">
+          <h1>Gym Social</h1>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Feed -->
+    <section class="community-feed" id="home-feed">
+      <!-- سيتم ملؤها بواسطة JavaScript -->
+    </section>
+  </div>
+  
+  <script>
+    // بيانات البوستات التجريبية
+    const socialPosts = [
+      {
+        user: 'ahmed_fit',
+        avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+        time: 'منذ 10 دقائق',
+        media: { type: 'image', url: 'https://images.unsplash.com/photo-1517960413843-0aee8e2d471c?auto=format&fit=crop&w=400&q=80' },
+        text: 'أكملت تمرين الصدر اليوم! 💪🔥 ضغط البنش 100 كجم × 8 تكرارات. الشعور رهيب!',
+        likes: 24,
+        liked: true,
+        comments: [
+          { user: 'mona', text: 'برافو عليك! 🔥', likes: 3 },
+          { user: 'coach_ali', text: 'أداء ممتاز! استمر هكذا', likes: 2 },
+          { user: 'fitness_lover', text: 'أنا كمان بدأت تمرين الصدر اليوم 💪', likes: 1 }
+        ]
+      },
+      {
+        user: 'sara.gym',
+        avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+        time: 'منذ ساعة',
+        media: { type: 'image', url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80' },
+        text: 'تمرين الرجلين كان متعب بس ممتع! 🦵✨ القرفصاء 80 كجم × 10 تكرارات × 4 مجموعات',
+        likes: 31,
+        liked: false,
+        comments: [
+          { user: 'ahmed_fit', text: '🔥🔥 أداء قوي!', likes: 5 },
+          { user: 'coach', text: 'استمري! الرجلين أساس الجسم', likes: 4 }
+        ]
+      }
+    ];
+
+    // دالة عرض البوستات
+    function renderHomeFeed() {
+      const homeFeed = document.getElementById('home-feed');
+      if (!homeFeed) return;
+      
+      homeFeed.innerHTML = socialPosts.map((post, idx) => {
+        let topComments = (post.comments||[]).slice().sort((a,b)=>(b.likes||0)-(a.likes||0)).slice(0,2);
+        return `
+        <div class="community-post" data-idx="${idx}" onclick="showPostDetails(${idx})">
+          <div class="post-header">
+            <img class="avatar" src="${post.avatar}" alt="${post.user}" style="object-fit:cover;">
+            <div class="user-info">
+              <span class="username">${post.user}</span>
+              <span class="time">${post.time}</span>
+            </div>
+          </div>
+          ${post.media ? (post.media.type === 'image' ? `<img class="post-image" src="${post.media.url}" alt="post">` : `<video class="post-image" src="${post.media.url}" controls></video>`) : ''}
+          <div class="post-text">${post.text}</div>
+          <div class="post-actions" onclick="event.stopPropagation()">
+            <button class="like-btn${post.liked ? ' liked' : ''}" data-idx="${idx}" onclick="toggleLike(${idx})"><i class="fas fa-heart"></i> <span>${post.likes}</span></button>
+            <button class="comment-btn" data-idx="${idx}"><i class="fas fa-comment"></i> <span>${post.comments.length}</span></button>
+          </div>
+          <div class="comments-list">
+            ${topComments.map((c, cidx) => `
+              <div class="comment">
+                <div class="comment-content"><b>${c.user}:</b> ${c.text}</div>
+                <button class="comment-like-btn${c.liked ? ' liked' : ''}" onclick="toggleCommentLike(${idx}, ${cidx})">
+                  <i class="fas fa-heart"></i>
+                  <span class="comment-like-count">${c.likes || 0}</span>
+                </button>
+              </div>
+            `).join('')}
+            ${post.comments.length > 2 ? `<div class="more-comments">عرض ${post.comments.length - 2} تعليق إضافي</div>` : ''}
+          </div>
+        </div>
+        `;
+      }).join('');
+    }
+
+    // دالة فتح نافذة التفاصيل
+    function showPostDetails(idx) {
+      console.log('محاولة فتح البوست رقم:', idx);
+      const post = socialPosts[idx];
+      if (!post) {
+        console.log('البوست غير موجود');
+        return;
+      }
+      console.log('تم العثور على البوست:', post.user);
+      
+      // بناء نافذة التفاصيل
+      let modal = document.getElementById('postDetailsModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'postDetailsModal';
+        modal.className = 'modal-overlay post-details-overlay';
+        modal.innerHTML = `
+          <div class='modal post-details-modal'>
+            <div class='post-details-header'>
+              <div class='post-details-user'>
+                <img class='avatar' src='${post.avatar}' alt='${post.user}'>
+                <div class='user-info'>
+                  <span class='username'>${post.user}</span>
+                  <span class='time'>${post.time}</span>
+                </div>
+              </div>
+              <button class='close-btn' onclick='closePostDetails()'>
+                <i class='fas fa-times'></i>
+              </button>
+            </div>
+            <div class='post-details-content'>
+              <div class='post-details-media'></div>
+              <div class='post-details-info'>
+                <div class='post-details-actions'>
+                  <button class='like-btn${post.liked ? ' liked' : ''}' data-idx="${idx}" onclick="toggleLikeInModal(${idx})">
+                    <i class='fas fa-heart'></i>
+                  </button>
+                  <button class='comment-btn' onclick="focusCommentInput()">
+                    <i class='fas fa-comment'></i>
+                  </button>
+                  <button class='share-btn'>
+                    <i class='fas fa-share'></i>
+                  </button>
+                </div>
+                <div class='post-details-likes'>
+                  <span class='likes-count'>${post.likes} إعجاب</span>
+                </div>
+                <div class='post-details-text'>
+                  <span class='username'>${post.user}</span> ${post.text}
+                </div>
+                <div class='post-details-comments'></div>
+                <div class='post-details-add-comment'>
+                  <input type='text' placeholder='أضف تعليقاً...' class='comment-input'>
+                  <button class='post-comment-btn' disabled>نشر</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      } else {
+        // تحديث المحتوى إذا كانت النافذة موجودة
+        modal.querySelector('.post-details-user .avatar').src = post.avatar;
+        modal.querySelector('.post-details-user .username').textContent = post.user;
+        modal.querySelector('.post-details-user .time').textContent = post.time;
+        modal.querySelector('.like-btn').className = `like-btn${post.liked ? ' liked' : ''}`;
+        modal.querySelector('.like-btn').setAttribute('data-idx', idx);
+        modal.querySelector('.like-btn').setAttribute('onclick', `toggleLikeInModal(${idx})`);
+        modal.querySelector('.likes-count').textContent = `${post.likes} إعجاب`;
+        modal.querySelector('.post-details-text').innerHTML = `<span class='username'>${post.user}</span> ${post.text}`;
+      }
+      
+      // تحديث الوسائط
+      const mediaContainer = modal.querySelector('.post-details-media');
+      if (post.media) {
+        if (post.media.type === 'image') {
+          mediaContainer.innerHTML = `<img src='${post.media.url}' alt='post'>`;
+        } else if (post.media.type === 'video') {
+          mediaContainer.innerHTML = `<video src='${post.media.url}' controls></video>`;
+        }
+      } else {
+        mediaContainer.innerHTML = '';
+      }
+      
+      // تحديث التعليقات
+      updateModalComments(idx);
+      
+      modal.style.display = 'flex';
+      modal.style.opacity = '1';
+      modal.style.visibility = 'visible';
+      
+      console.log('تم إظهار النافذة');
+      
+      // منع التمرير في الصفحة الخلفية
+      document.body.style.overflow = 'hidden';
+    }
+
+    // دالة إغلاق النافذة
+    function closePostDetails() {
+      const modal = document.getElementById('postDetailsModal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.style.opacity = '0';
+        modal.style.visibility = 'hidden';
+        // إعادة تفعيل التمرير في الصفحة
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    // دالة تحديث التعليقات
+    function updateModalComments(postIdx) {
+      const post = socialPosts[postIdx];
+      if (!post) return;
+      
+      const modal = document.getElementById('postDetailsModal');
+      if (!modal) return;
+      
+      const commentsContainer = modal.querySelector('.post-details-comments');
+      const allComments = (post.comments || []).slice().sort((a,b) => (b.likes||0)-(a.likes||0));
+      
+      if (allComments.length > 0) {
+        const commentsHtml = allComments.map((c, cidx) => `
+          <div class='post-details-comment'>
+            <div class='comment-content'>
+              <span class='username'>${c.user}</span> ${c.text}
+            </div>
+            <div class='comment-actions'>
+              <button class='comment-like-btn${c.liked ? ' liked' : ''}' onclick="toggleCommentLikeInModal(${postIdx}, ${cidx})">
+                <i class='fas fa-heart'></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+        commentsContainer.innerHTML = commentsHtml;
+      } else {
+        commentsContainer.innerHTML = '<div class="no-comments">لا توجد تعليقات بعد</div>';
+      }
+    }
+
+    // دالة تفعيل الإعجاب
+    function toggleLike(postIndex) {
+      const post = socialPosts[postIndex];
+      if (!post) return;
+      
+      post.liked = !post.liked;
+      post.likes += post.liked ? 1 : -1;
+      
+      // تحديث العرض
+      const likeBtn = document.querySelector(`[data-idx="${postIndex}"].like-btn`);
+      if (likeBtn) {
+        likeBtn.classList.toggle('liked', post.liked);
+        likeBtn.querySelector('span').textContent = post.likes;
+      }
+    }
+
+    // دالة تفعيل إعجاب التعليق
+    function toggleCommentLike(postIndex, commentIndex) {
+      const post = socialPosts[postIndex];
+      if (!post || !post.comments || !post.comments[commentIndex]) return;
+      
+      const comment = post.comments[commentIndex];
+      comment.liked = !comment.liked;
+      comment.likes = (comment.likes || 0) + (comment.liked ? 1 : -1);
+      
+      // تحديث العرض
+      renderHomeFeed();
+    }
+
+    // دالة تفعيل الإعجاب في النافذة
+    function toggleLikeInModal(postIdx) {
+      const post = socialPosts[postIdx];
+      if (!post) return;
+      
+      post.liked = !post.liked;
+      if (post.liked) {
+        post.likes++;
+      } else {
+        post.likes = Math.max(0, post.likes - 1);
+      }
+      
+      // تحديث النافذة
+      const modal = document.getElementById('postDetailsModal');
+      if (modal) {
+        const likeBtn = modal.querySelector('.like-btn');
+        const likesCount = modal.querySelector('.likes-count');
+        
+        likeBtn.className = `like-btn${post.liked ? ' liked' : ''}`;
+        likesCount.textContent = `${post.likes} إعجاب`;
+      }
+      
+      // تحديث الفيد الرئيسي
+      renderHomeFeed();
+    }
+
+    // دالة تفعيل إعجاب التعليق في النافذة
+    function toggleCommentLikeInModal(postIdx, commentIdx) {
+      const post = socialPosts[postIdx];
+      if (!post || !post.comments || !post.comments[commentIdx]) return;
+      
+      const comment = post.comments[commentIdx];
+      comment.liked = !comment.liked;
+      if (comment.liked) {
+        comment.likes = (comment.likes || 0) + 1;
+      } else {
+        comment.likes = Math.max(0, (comment.likes || 0) - 1);
+      }
+      
+      // تحديث النافذة
+      updateModalComments(postIdx);
+      
+      // تحديث الفيد الرئيسي
+      renderHomeFeed();
+    }
+
+    // دالة التركيز على حقل التعليق
+    function focusCommentInput() {
+      const commentInput = document.querySelector('.comment-input');
+      if (commentInput) {
+        commentInput.focus();
+      }
+    }
+
+    // تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('الصفحة تم تحميلها');
+      console.log('عدد البوستات:', socialPosts.length);
+      renderHomeFeed();
+    });
+  </script>
+</body>
+</html> 

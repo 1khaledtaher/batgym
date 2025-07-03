@@ -27,19 +27,21 @@
     <!-- Post Form -->
     <section class="post-form-section">
       <form id="postForm" class="post-form">
-        <textarea id="postText" placeholder="شارك تمرينك أو نصيحة للجيم..." rows="2"></textarea>
+        <textarea id="postText" placeholder="شارك تمرينك أو نصيحة للجيم..." rows="1"></textarea>
         <div class="post-form-actions">
-          <label class="media-btn">
+          <label class="media-btn" title="إضافة صورة أو فيديو">
             <i class="fas fa-image"></i>
             <input type="file" id="postImage" accept="image/*,video/*" hidden>
           </label>
-          <button type="submit" class="btn-primary">نشر</button>
+          <button type="submit" class="btn-primary" id="postSubmitBtn">نشر</button>
         </div>
-        <div id="mediaPreview" class="media-preview"></div>
       </form>
+      <div id="mediaPreview" class="media-preview"></div>
     </section>
     <!-- Feed -->
-    <!-- تم حذف قسم المجتمع -->
+    <section class="community-feed" id="home-feed">
+      <!-- سيتم ملؤها بواسطة JavaScript -->
+    </section>
     <!-- Sidebar Overlay -->
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
     <!-- Sidebar -->

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار تصميم انستجرام</title>
+  <link rel="stylesheet" href="mobile-style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="header-left">
+          <h1>Gym Social</h1>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Post Form -->
+    <section class="post-form-section">
+      <form class="post-form">
+        <textarea placeholder="شارك تمرينك أو نصيحة للجيم..." rows="1"></textarea>
+        <div class="post-form-actions">
+          <label class="media-btn" title="إضافة صورة أو فيديو">
+            <i class="fas fa-image"></i>
+            <input type="file" accept="image/*,video/*" hidden>
+          </label>
+          <button type="submit" class="btn-primary">نشر</button>
+        </div>
+      </form>
+    </section>
+    
+    <!-- Feed -->
+    <section class="community-feed">
+      <!-- Post 1 -->
+      <div class="community-post">
+        <div class="post-header">
+          <img class="avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+          <div class="user-info">
+            <span class="username">ahmed_fit</span>
+            <span class="time">منذ 10 دقائق</span>
+          </div>
+        </div>
+        <img class="post-image" src="https://images.unsplash.com/photo-1517960413843-0aee8e2d471c?auto=format&fit=crop&w=400&q=80" alt="post">
+        <div class="post-text">أكملت تمرين الصدر اليوم! 💪🔥 ضغط البنش 100 كجم × 8 تكرارات. الشعور رهيب!</div>
+        <div class="post-actions">
+          <button class="like-btn liked"><i class="fas fa-heart"></i> <span>24</span></button>
+          <button class="comment-btn"><i class="fas fa-comment"></i> <span>3</span></button>
+        </div>
+        <div class="comments-list">
+          <div class="comment">
+            <div class="comment-content"><b>mona:</b> برافو عليك! 🔥</div>
+            <button class="comment-like-btn">
+              <i class="fas fa-heart"></i>
+              <span class="comment-like-count">3</span>
+            </button>
+          </div>
+          <div class="comment">
+            <div class="comment-content"><b>coach_ali:</b> أداء ممتاز! استمر هكذا</div>
+            <button class="comment-like-btn">
+              <i class="fas fa-heart"></i>
+              <span class="comment-like-count">2</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Post 2 -->
+      <div class="community-post">
+        <div class="post-header">
+          <img class="avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+          <div class="user-info">
+            <span class="username">sara.gym</span>
+            <span class="time">منذ ساعة</span>
+          </div>
+        </div>
+        <img class="post-image" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="post">
+        <div class="post-text">تمرين الرجلين كان متعب بس ممتع! 🦵✨ القرفصاء 80 كجم × 10 تكرارات × 4 مجموعات</div>
+        <div class="post-actions">
+          <button class="like-btn"><i class="fas fa-heart"></i> <span>31</span></button>
+          <button class="comment-btn"><i class="fas fa-comment"></i> <span>3</span></button>
+        </div>
+        <div class="comments-list">
+          <div class="comment">
+            <div class="comment-content"><b>ahmed_fit:</b> 🔥🔥 أداء قوي!</div>
+            <button class="comment-like-btn">
+              <i class="fas fa-heart"></i>
+              <span class="comment-like-count">5</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Post 3 (Text Only) -->
+      <div class="community-post">
+        <div class="post-header">
+          <img class="avatar" src="https://randomuser.me/api/portraits/men/65.jpg" alt="User">
+          <div class="user-info">
+            <span class="username">mohamed_pro</span>
+            <span class="time">منذ ساعتين</span>
+          </div>
+        </div>
+        <div class="post-text">حافظ على استمراريتك، النتائج قادمة! 🚀 اليوم 30 يوم متواصل في الجيم. لا تستسلم!</div>
+        <div class="post-actions">
+          <button class="like-btn liked"><i class="fas fa-heart"></i> <span>18</span></button>
+          <button class="comment-btn"><i class="fas fa-comment"></i> <span>2</span></button>
+        </div>
+        <div class="comments-list">
+          <div class="comment">
+            <div class="comment-content"><b>fitness_goals:</b> إلهام حقيقي! 👏</div>
+            <button class="comment-like-btn">
+              <i class="fas fa-heart"></i>
+              <span class="comment-like-count">3</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html> 
